@@ -1,0 +1,9 @@
+model: "openai/mistralai/Mistral-7B-Instruct-v0.2"
+retrieve_model: "openai/mistralai/Mistral-7B-Instruct-v0.2"
+toc_check_page_num: 5
+max_page_num_each_node: 5
+max_token_num_each_node: 5000
+if_add_node_id: "yes"
+if_add_node_summary: "yes"
+if_add_doc_description: "no"
+if_add_node_text: "no"

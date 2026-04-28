@@ -1,0 +1,4 @@
+To run run_pageindex.py:
+    python3 run_pageindex.py --pdf_path ./vr_paper.pdf
+
+To 
