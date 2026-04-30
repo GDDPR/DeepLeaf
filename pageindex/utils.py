@@ -540,30 +540,72 @@ def check_token_limit(structure, limit=110000):
             print("\n")
 
 
-def convert_physical_index_to_int(data):
-    if isinstance(data, list):
-        for i in range(len(data)):
-            if isinstance(data[i], dict) and "physical_index" in data[i]:
-                if isinstance(data[i]["physical_index"], str):
-                    if data[i]["physical_index"].startswith("<physical_index_"):
-                        data[i]["physical_index"] = int(
-                            data[i]["physical_index"].split("_")[-1].rstrip(">").strip()
-                        )
-                    elif data[i]["physical_index"].startswith("physical_index_"):
-                        data[i]["physical_index"] = int(
-                            data[i]["physical_index"].split("_")[-1].strip()
-                        )
-    elif isinstance(data, str):
-        if data.startswith("<physical_index_"):
-            data = int(data.split("_")[-1].rstrip(">").strip())
-        elif data.startswith("physical_index_"):
-            data = int(data.split("_")[-1].strip())
-        if isinstance(data, int):
-            return data
-        else:
-            return None
-    return data
+def _physical_index_value_to_int(value):
+    """
+    Convert PageIndex physical_index values into an int page number.
 
+    Valid examples:
+        3
+        "3"
+        "<physical_index_3>"
+        "physical_index_3"
+
+    Invalid examples:
+        "1.1.1"   # section number, not a page number
+        "Section 1"
+        None
+
+    Invalid values return None instead of crashing.
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, int):
+        return value
+
+    if isinstance(value, float):
+        return int(value) if value.is_integer() else None
+
+    if not isinstance(value, str):
+        return None
+
+    value = value.strip()
+
+    match = re.fullmatch(r"<?physical_index_(\d+)>?", value)
+    if match:
+        return int(match.group(1))
+
+    if re.fullmatch(r"\d+", value):
+        return int(value)
+
+    # Important: values like "1.1.1" are section numbers, not page numbers.
+    return None
+
+
+def convert_physical_index_to_int(data):
+    """
+    Normalize physical_index values.
+
+    Local LLMs sometimes confuse a document section number, like "1.1.1",
+    with a page marker. The original version could crash with:
+
+        ValueError: invalid literal for int() with base 10: '1.1.1'
+
+    This version converts only real page markers/page numbers and safely sets
+    invalid physical_index values to None.
+    """
+    if isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict) and "physical_index" in item:
+                item["physical_index"] = _physical_index_value_to_int(item.get("physical_index"))
+        return data
+
+    if isinstance(data, dict):
+        if "physical_index" in data:
+            data["physical_index"] = _physical_index_value_to_int(data.get("physical_index"))
+        return data
+
+    return _physical_index_value_to_int(data)
 
 def convert_page_to_int(data):
     for item in data:

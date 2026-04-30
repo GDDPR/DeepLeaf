@@ -464,18 +464,25 @@ def remove_page_number(data):
 
 def extract_matching_page_pairs(toc_page, toc_physical_index, start_page_index):
     pairs = []
+
     for phy_item in toc_physical_index:
         for page_item in toc_page:
             if phy_item.get('title') == page_item.get('title'):
                 physical_index = phy_item.get('physical_index')
-                if physical_index is not None and int(physical_index) >= start_page_index:
+
+                # convert_physical_index_to_int now turns bad values like "1.1.1"
+                # into None. Keep this extra guard so this function never crashes.
+                if not isinstance(physical_index, int):
+                    continue
+
+                if physical_index >= start_page_index:
                     pairs.append({
                         'title': phy_item.get('title'),
                         'page': page_item.get('page'),
                         'physical_index': physical_index
                     })
-    return pairs
 
+    return pairs
 
 def calculate_page_offset(pairs):
     differences = []
@@ -500,14 +507,15 @@ def calculate_page_offset(pairs):
     return most_common
 
 def add_page_offset_to_toc_json(data, offset):
+    if offset is None:
+        return data
+
     for i in range(len(data)):
         if data[i].get('page') is not None and isinstance(data[i]['page'], int):
             data[i]['physical_index'] = data[i]['page'] + offset
             del data[i]['page']
-    
+
     return data
-
-
 
 def page_list_to_group_text(page_contents, token_lengths, max_tokens=20000, overlap_page=1):    
     num_tokens = sum(token_lengths)
@@ -760,6 +768,11 @@ def process_toc_with_page_numbers(toc_content, toc_page_list, page_list, toc_che
 
     offset = calculate_page_offset(matching_pairs)
     logger.info(f'offset: {offset}')
+
+    if offset is None:
+        if logger:
+            logger.info('Could not calculate TOC page offset; falling back to process_no_toc.')
+        return process_no_toc(page_list, start_index=1, model=model, logger=logger)
 
     toc_with_page_number = add_page_offset_to_toc_json(toc_with_page_number, offset)
     logger.info(f'toc_with_page_number: {toc_with_page_number}')

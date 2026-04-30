@@ -1,0 +1,148 @@
+{
+  "id": "74021b01-a175-4446-8ed4-a7de53674302",
+  "type": "pdf",
+  "path": "/home/kevinz/deepleaf/docs/DAOD6000-0.pdf",
+  "doc_name": "DAOD6000-0.pdf",
+  "doc_description": " This document on Canada.ca discusses the \"DAOD 6000-0, Information Management and Information Technology\" directive, providing definitions, policy direction, consequences, and authorities related to this topic in the Canadian Defense Department and Canadian Armed Forces.",
+  "page_count": 8,
+  "structure": [
+    {
+      "title": "Introduction",
+      "node_id": "0000",
+      "start_index": 1,
+      "end_index": 0,
+      "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+    },
+    {
+      "title": "Definitions",
+      "node_id": "0001",
+      "start_index": 1,
+      "end_index": 0,
+      "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+    },
+    {
+      "title": "Policy Dir ection",
+      "node_id": "0002",
+      "start_index": 1,
+      "end_index": 0,
+      "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+    },
+    {
+      "title": "Consequences",
+      "node_id": "0003",
+      "start_index": 1,
+      "end_index": 0,
+      "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction.",
+      "nodes": [
+        {
+          "title": "Should clarification of the policy statement, r equir ements or authorities",
+          "node_id": "0004",
+          "start_index": 5,
+          "end_index": 4,
+          "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+        }
+      ]
+    },
+    {
+      "title": "Authorities",
+      "node_id": "0005",
+      "start_index": 1,
+      "end_index": 1,
+      "summary": " The partial document discusses the \"Defence Administrative Orders and Directives\" series (DAOD 6000) under the \"Information Management and Information Technology\" category on Canada.ca. The document includes an introduction, definitions, policy direction, consequences, and authorities related to this topic. The introduction provides the date of issue and last modification, and there is a reference to the full document location on Canada.ca.",
+      "nodes": [
+        {
+          "title": "The follo wing table identifies the authorities associated with this D AOD:",
+          "node_id": "0006",
+          "start_index": 5,
+          "end_index": 6,
+          "summary": " The partial document outlines the main points of DAOD 6000-0 regarding Information Management and Information Technology in the Canadian Defense Department (DND) and Canadian Armed Forces (CAF). The document covers:\n\na. Establishing strategic direction and governance structures for IM and IT, including approving strategies, plans, projects, and programs.\nb. Ensuring the Defense CIO has visibility on all IM and IT activities across the DND and CAF.\nc. Providing clear, concise, and consistent direction and guidance on the management of IM, IT, IT security, information security, COMSEC, and defense terminology.\n\nThe document also discusses the consequences of not properly implementing the requirements, including the potential impact on the readiness of the CAF for missions and maintaining international peace and stability. An authority table is provided, identifying the individuals or entities with the authority to establish strategic direction, issue policies, and oversee compliance, among other responsibilities. The document also mentions the establishment of defense IM and IT, IT security, COMSEC, and defense terminology programs."
+        }
+      ]
+    },
+    {
+      "title": "Refer ences",
+      "node_id": "0007",
+      "start_index": 1,
+      "end_index": 3,
+      "summary": " This partial document describes the \"DAOD 6000-0, Information Management and Information Technology\" directive on Canada.ca. The document provides definitions for terms such as communications security, defence terminology, information management, information security, information technology, and information technology security. It also outlines the application, approval authority, enquiries, and supersession of the directive. The document applies to employees of the Department of National Defence and officers and non-commissioned members of the Canadian Armed Forces. The terms and their definitions are related to the management and protection of information and information technology in the organization."
+    },
+    {
+      "title": "Policy Direction",
+      "node_id": "0008",
+      "start_index": 4,
+      "end_index": 3,
+      "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction.",
+      "nodes": [
+        {
+          "title": "ADM(IM), as the Defence Chief Information Officer (CIO) for the DND",
+          "node_id": "0009",
+          "start_index": 4,
+          "end_index": 3,
+          "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+        },
+        {
+          "title": "This D AOD, along with the DND and CAF IM and IT Policy Fr ame work,",
+          "node_id": "0010",
+          "start_index": 4,
+          "end_index": 3,
+          "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+        },
+        {
+          "title": "The DND and the CAF ar e committed to a collabor ative appr oach for the",
+          "node_id": "0011",
+          "start_index": 4,
+          "end_index": 3,
+          "summary": " The partial document discusses the need to directly return a description without including any other text. No specific main points are covered beyond this instruction."
+        },
+        {
+          "title": "The DND and the CAF must:",
+          "node_id": "0012",
+          "start_index": 4,
+          "end_index": 4,
+          "summary": " The partial document outlines the Defense Chief Information Officer (ADM(IM))'s role in managing information technology and information security for the Department of National Defense (DND) and Canadian Armed Forces (CAF). The document provides strategic direction for the DND and CAF in delivering integrated information management and technology, aligned with their priorities. The DND and CAF are committed to a collaborative approach and must develop and maintain integrated business plans. The document emphasizes the importance of preserving the confidentiality, integrity, availability, intended use, and value of electronically stored, processed, or transmitted information."
+        }
+      ]
+    },
+    {
+      "title": "References",
+      "node_id": "0013",
+      "start_index": 7,
+      "end_index": 8,
+      "summary": " The partial document outlines the roles and responsibilities of level one advisors and commanders in relation to Information Management (IM) and Information Technology (IT) within their organizations. Their duties include providing direction and guidance on IM, IT, IT security, and information security, setting priorities, developing and maintaining integrated business plans, and representing IM and IT interests to the ADM(IM). The document also references various acts, regulations, and policies related to IM and IT management, including DAOD 6000-0, DAOD 1000-6, and DAOD 1000-8."
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "content": "Canada.ca\n National Defence\n Policies and standar ds\nDefence Administr ative Or ders and Dir ectives\nDefence Administr ative Or ders and Dir ectives (D AOD) - 6000\nDAOD 6000 - T able of Contents \n\n\n\nDAOD 6000-0, Information\nManagement and Information\nTechnology\nTable of Contents\n1. Introduction\n2. Definitions\n3. Policy Dir ection\n4. Consequences\n5. Authorities\n6. Refer ences\n1. Introduction\nDate of Issue:  1998-08-31\nDate of Last Modification:  2019-07-164/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 1/8"
+    },
+    {
+      "page": 2,
+      "content": "Application:  This D AOD is a dir ective that applies to emplo yees of the\nDepartment of National Defence (DND emplo yees) and an or der that\napplies to officers and non-commissioned members of the Canadian Armed\nForces (CAF members).\nSupersession:\nNational Defence Headquarters Policy Dir ective P3/94, DND/CF Policy for\nInformation Management\nInformation Management Dir ective  (IMD) 1/95\nAppr oval Authority:  Assistant Deputy Minister (Information Management)\n(ADM(IM))\nEnquiries:  Director Defence Information Management Planning (DDIMP)\n2. Definitions\ncommunications security  (sécurité des communications )\nThe pr otection r esulting fr om the application of cryptogr aphic,\ntransmission, emission, physical and tr affic-flo w security measur es to\ndeny unauthorized persons or entities any information of value that\nmight be derived fr om the study of all communications means.\n(Defence T erminology Bank r ecor d number 23375)\ndefence terminology  (terminologie de la défense )\nThe body of standar dized gener al, doctrinal, oper ational,\norganizational, technical, pr ocedur al and administr ative terminology\npertaining to DND and CAF activities. (Defence T erminology Bank\nrecor d number 27543)\ninformation management  (gestion de l’information )4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 2/8"
+    },
+    {
+      "page": 3,
+      "content": "A discipline that dir ects and supports effective and efficient\nmanagement of information and data in an or ganization, fr om\nplanning and systems de velopment to disposal or long-term\npreservation. ( Policy on Information Management , Treasury Boar d)\ninformation security (sécurité des informations )\nThe pr otection of information against unauthorized disclosur e,\ntransfer, modification or destruction, whether accidental or intentional.\nNote –  Information may e xist in the human mind, in document form\nand in electr onic form. Information in the human mind will be\nprotected b y the use of appr opriate personnel security measur es.\nInformation in document form will be pr otected b y the use of\nappr opriate document security measur es. Information in electr onic\nform will be pr otected b y the use of appr opriate INFOSEC measur es\n(AAP-31; A ComP-01 - 790.NN.33). (Defence T erminology Bank r ecor d\nnumber 13819)\ninformation technology  (technologies de l’information )\nInvolves both technology infr astructur e and IT applications.\nTechnology infr astructur e includes any equipment or system that is\nused in the automatic acquisition, stor age, manipulation,\nmanagement, mo vement, contr ol, display, switching, inter change,\ntransmission or r eception of data or information. IT applications\ninclude all matters concerned with the design, de velopment,\ninstallation and implementation of information systems and\napplications to meet business r equir ements. ( Directive on Management\nof Information Technology , Treasury Boar d)\ninformation technology security  (sécurité des technologies de\nl'information )4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 3/8"
+    },
+    {
+      "page": 4,
+      "content": "Safeguar ds to pr eserve the confidentiality, integrity, availability,\nintended use and value of electr onically stor ed, pr ocessed or\ntransmitted information. ( Operational Security Standar d: Management of\nInformation Technology Security (MITS) , Treasury Boar d)\n3. Policy Direction\nContext\n3.1 ADM(IM), as the Defence Chief Information Officer (CIO) for the DND\nand the CAF, is r esponsible for the effective and efficient management of\nIM and information technology (IT) as described in the T reasury Boar d\nDirective on Information Management Roles and Responsibilities and the\nDirective on Management of Information Technology .\n3.2 This D AOD, along with the DND and CAF IM and IT Policy Fr ame work,\nprovides the str ategic conte xt on ho w the Defence CIO pr ovides supporting\ndirection and guidance r elating to the management of IM, IT, information\nsecurity, IT security, communication security (C OMSEC) and defence\nterminology to the DND and the CAF.\nPolicy Statement\n3.3 The DND and the CAF ar e committed to a collabor ative appr oach for the\ndelivery of IM and IT, aligned with DND and CAF priorities, and supported\nby centr alized o versight and dir ection.\nRequirements\n3.4 The DND and the CAF must:\na. develop and maintain integr ated IM and IT business plans;4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 4/8"
+    },
+    {
+      "page": 5,
+      "content": "b. establish DND- and CAF-wide str ategic dir ection and go vernance\nstructur es for IM and IT;\nc. ensur e that the Defence CIO has visibility on all IM and IT activities\nacross the DND and the CAF; and\nd. provide clear, concise and consistent dir ection and guidance on the\nmanagement of IM, IT, IT security, information security, C OMSEC and\ndefence terminology.\n4. Consequences\nGeneral\n4.1 Should clarification of the policy statement, r equir ements or authorities\nset out in this D AOD be r equir ed, DND emplo yees and CAF members may\nseek dir ection thr ough their channel of communication or chain of\ncommand, as appr opriate. The anticipated r esults set out in the policy\nstatement may not be achie ved b y the DND and the CAF if the\nrequir ements specified in this D AOD ar e not pr operly implemented. Not\nachie ving the anticipated r esults could affect the ability of the DND and the\nCAF to ensur e that the CAF is pr epar ed to undertak e missions for the\nprotection of Canada and Canadians and the maintenance of international\npeace and stability.\n5. Authorities\nAuthority Table\n5.1 The follo wing table identifies the authorities associated with this D AOD:\nThe ... has or have the authority to ...4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 5/8"
+    },
+    {
+      "page": 6,
+      "content": "ADM(IM) establish str ategic dir ection and go vernance\nstructur es, and appr ove str ategies, plans,\nprojects and pr ogrammes, for IM, IT, IT security,\ninformation security, C OMSEC and defence\nterminology in the DND and the CAF;\nissue policies, dir ectives, instructions and\nstandar ds for IM, IT, IT security, information\nsecurity, C OMSEC and defence terminology  in\nthe DND and the CAF, and o versee their\ncompliance;\nestablish IM and IT services and capabilities that\nalign with business and oper ational objectives,\nand o versee their management, delivery and\nmaintenance;\nlead DND and CAF coor dination, and act as the\nfocal point, for IM, IT, IT security, information\nsecurity, C OMSEC and defence terminology with\nother go vernment departments and agencies,\nindustry and allies; and\nestablish:\na defence IM and IT pr ogramme for the\neffective and efficient management of IM\nand IT in the DND and the CAF;\nan IT security pr ogramme as part of a\ncoor dinated DND and CAF security\nprogramme;\na COMSEC pr ogramme to pr otect DND and\nCAF information fr om unauthorized access;\nand\na defence terminology pr ogramme for the\neffective and efficient management of\ndefence terminology.4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 6/8"
+    },
+    {
+      "page": 7,
+      "content": "level one advisors\nand commanders\nof commandsissue amplifying IM, IT, IT security, information\nsecurity and defence terminology dir ection and\nguidance to their or ganizations;\nset the IM and IT priorities of their\norganizations;\ndevelop and maintain integr ated IM and IT\nbusiness plans;\nrepresent the IM and IT inter ests of their\norganizations to the ADM(IM); and\nassist the ADM(IM) in r epresenting their IM and\nIT inter ests with other go vernment departments\nand agencies, industry and allies.\nTop of Page\n6. References\nActs, Regulations, Central Agency Policies and Policy\nDAOD\nPolicy on Information Management , Treasury Boar d\nDirective on Information Management Roles and Responsibilities , Treasury\nBoar d\nDirective on Management of Information Technology , Treasury Boar d\nOperational Security Standar d: Management of Information Technology\nSecurity (MITS) , Treasury Boar d\nDAOD 1000-6 , Policy Framework for Information and Information\nTechnology Management\nDAOD 1000-8 , Policy Framework for Safety and Security Management4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 7/8"
+    },
+    {
+      "page": 8,
+      "content": "Other References\nDAOD 6001-0 , Information Management\nDAOD 6002-0 , Information Technology\nDAOD 6003-0 , Information Technology Security\nDAOD 6004-0 , Defence Terminology\nDND and CF IM and IT Policy Framework\nIM and IT Policy Staffing P rocess – Appendix A to the DND and C AF IM and\nIT Policy Framework\nSignatur e and Appr oval P rocess for IM and IT Standar ds and Guides\nGuideline on Supplementary Policy Instruments (draft)\nGuideline on the Management of ADM(IM) and Defence CIO Dir ectives,\nInstructions and other Corr espondence\nADM(IM) IM and IT Policy Instrument De velopment intr anet site\nADM(IM) IM and IT D AOD, Standar ds and Guides intr anet site\nADM(IM) Interim Dir ectives, Instructions and Other Corr espondence\nintranet site\n \nDate modified:  2017-06-054/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 8/8"
+    }
+  ]
+}

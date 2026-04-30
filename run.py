@@ -1,7 +1,7 @@
 import os
 from ask import ask_question, DEFAULT_MODEL
 
-DEFAULT_PDF_PATH = "./vr_paper.pdf"
+DEFAULT_PDF_PATH = "./docs/DAOD6000-0.pdf"
 
 
 def main() -> None:

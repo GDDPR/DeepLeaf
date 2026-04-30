@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import re
 from typing import Any, Dict, List, Optional
 
 from pageindex.client import PageIndexClient
@@ -26,6 +27,61 @@ def parse_json(raw: Any) -> Any:
         return json.loads(raw)
     except Exception:
         return raw
+
+
+def recover_page_selection_from_raw_output(raw: str) -> Dict[str, Any]:
+    """
+    Recover the pages field when a local LLM returns almost-valid JSON.
+
+    Example problem:
+        "reason": "the "Authorities" section is relevant"
+
+    The unescaped quotes around Authorities break json.loads(), but the pages
+    value is often still present and usable.
+    """
+    if not isinstance(raw, str):
+        return {}
+
+    pages_match = re.search(
+        r'"pages"\s*:\s*"(?P<pages>[^"\n]+)"',
+        raw,
+        flags=re.IGNORECASE,
+    )
+
+    if not pages_match:
+        return {}
+
+    pages = pages_match.group("pages").strip()
+
+    safe_pages_match = re.search(r'[0-9,\-\s]+', pages)
+    pages = safe_pages_match.group(0).strip() if safe_pages_match else ""
+
+    if not pages:
+        return {}
+
+    selected_nodes = []
+    node_ids = re.findall(r'"node_id"\s*:\s*"(?P<node_id>[^"]+)"', raw)
+    titles = re.findall(r'"title"\s*:\s*"(?P<title>[^"]+)"', raw)
+    starts = re.findall(r'"start_index"\s*:\s*(?P<start>\d+)', raw)
+    ends = re.findall(r'"end_index"\s*:\s*(?P<end>\d+)', raw)
+
+    for index, node_id in enumerate(node_ids):
+        node = {"node_id": node_id}
+
+        if index < len(titles):
+            node["title"] = titles[index]
+        if index < len(starts):
+            node["start_index"] = int(starts[index])
+        if index < len(ends):
+            node["end_index"] = int(ends[index])
+
+        selected_nodes.append(node)
+
+    return {
+        "pages": pages,
+        "reason": "Recovered page range from malformed JSON returned by the local LLM.",
+        "selected_nodes": selected_nodes,
+    }
 
 
 def find_existing_doc_id(client: PageIndexClient, pdf_path: str) -> Optional[str]:
@@ -134,6 +190,9 @@ Rules:
 - If unsure, choose the closest relevant high-level section.
 - Do not answer the question yet.
 - Return only valid JSON.
+- Do not wrap the JSON in markdown.
+- Do not put double quotation marks inside any string values. Use single quotes if needed.
+- Keep the reason fields short.
 
 Return format:
 {{
@@ -161,6 +220,14 @@ PageIndex tree:
     selected = extract_json(raw)
 
     if not isinstance(selected, dict):
+        selected = recover_page_selection_from_raw_output(raw)
+
+    if isinstance(selected, dict) and not selected.get("pages"):
+        recovered = recover_page_selection_from_raw_output(raw)
+        if recovered.get("pages"):
+            selected = recovered
+
+    if not isinstance(selected, dict):
         raise ValueError(
             "The LLM did not return a JSON object when selecting pages.\n"
             f"Raw output:\n{raw}"
@@ -173,6 +240,7 @@ PageIndex tree:
             f"Raw output:\n{raw}"
         )
 
+    selected["pages"] = str(selected["pages"]).strip()
     return selected
 
 
