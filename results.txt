@@ -1,106 +1,144 @@
-presets:
-toc_check_page_num: 5
-max_page_num_each_node: 5
-max_token_num_each_node: 5000
-if_add_node_id: "yes"
-if_add_node_summary: "yes"
-if_add_doc_description: "no"
-if_add_node_text: "no"
+(.venv) kevinz@N2:~/deepleaf$ python pageindex_rag.py \
+    --pdf-path docs/DAOD6000-0.pdf \
+    --structure-json results/DAOD6000-0_structure.json \
+    --question "What authority does ADM(IM) have?" \
+    --model Qwen/Qwen2.5-7B-Instruct-AWQ \
+    --verbose
 
-DEFAULT_PDF_PATH = "./docs/DAOD6000-0.pdf"
+[step 1 raw model output]
+{
+  "reason": "Determine if the document contains information about ADM(IM)'s authority",
+  "action": "get_document",
+  "args": {}
+}
 
-output:
-Type 'exit' or 'quit' to stop.
+[tool call] get_document({})
+[reason] Determine if the document contains information about ADM(IM)'s authority
+[tool output preview]
+{
+  "doc_id": "d3d19075-ee11-4ee4-93c3-474d198bc99e",
+  "doc_name": "DAOD6000-0.pdf",
+  "doc_description": "",
+  "page_count": 8,
+  "status": "loaded"
+}
 
-Question: Who is responsible for the effective and efficient management of IM and IT for the DND and CAF?
-Warning: corrupt _meta.json: [Errno 2] No such file or directory: 'ask_results/_meta.json'
-Indexing document with PageIndexClient...
-Indexing PDF: /home/kevinz/deepleaf/docs/DAOD6000-0.pdf
-Parsing PDF...
-start find_toc_pages
-toc found
-start detect_page_index
-index found
-process_toc_with_page_numbers
-start_index: 1
-start toc_transformer
-start toc_index_extractor
-Document validation: 8 pages, max allowed index: 8
-start verify_toc
-check all items
-accuracy: 100.00%
-Indexing complete. Document ID: 74021b01-a175-4446-8ed4-a7de53674302
-Warning: corrupt _meta.json: [Errno 2] No such file or directory: 'ask_results/_meta.json'
-Indexed document ID: 74021b01-a175-4446-8ed4-a7de53674302
 
-Selected pages:
-0005,0007,0008,00013
+[step 2 raw model output]
+{"reason": "Obtain the structure of the document to identify relevant sections on ADM(IM)'s authority", "action": "get_document_structure", "args": {}}
 
-Reason:
-The question asks about the responsible parties for the effective and efficient management of IM and IT for the DND and CAF. The document in the tree provides information on the authorities related to IM and IT management in DAOD 6000-0 in the nodes with ids 0005 and 0013. The node with id 0007 provides definitions for terms such as information management and information technology, which are relevant to the question. The node with id 0008 discusses the role of the Defence Chief Information Officer (ADM(IM)) in managing IM and IT for the DND and CAF, which is also relevant to the question.
-
-Answer:
-
- Based on the retrieved pages, the responsibilities for the effective and efficient management of IM and IT for the DND and CAF are shared among several entities. The Defence CIO is responsible for having visibility on all IM and IT activities across the DND and CAF, and providing clear, concise, and consistent direction and guidance. Level one advisors and commanders of commands also issue direction and guidance to their organizations, set IM and IT priorities, develop and maintain integrated IM and IT business plans, represent the IM and IT interests, and assist the ADM(IM) in representing their IM and IT interests with other government departments and agencies, industry, and allies. The ADM(IM) is also involved in representing the IM and IT interests with other government departments and agencies. The authorities associated with this DAOD include the Department of National Defence and Canadian Armed Forces.
-
-Pages used: 0005,0007,0008,00013
-
---------------------------------------------------------------------------------
-
-Question: What are the DND and CAF committed to for the delivery of IM and IT?
-Using existing indexed document: 74021b01-a175-4446-8ed4-a7de53674302
-
-Selected pages:
-0011,0012
-
-Reason:
-The selected sections discuss the commitment of the DND and CAF to a collaborative approach for delivering integrated information management and technology.
-
-Selected PageIndex nodes:
+[tool call] get_document_structure({})
+[reason] Obtain the structure of the document to identify relevant sections on ADM(IM)'s authority
+[tool output preview]
 [
   {
-    "node_id": "0011",
-    "title": "The DND and the CAF are committed to a collaborative approach for the",
-    "start_index": 4,
-    "end_index": 3,
-    "reason": "This section states that the DND and CAF are committed to a collaborative approach for the delivery of IM and IT."
+    "title": "Canada.ca",
+    "node_id": "0000",
+    "start_index": 1,
+    "end_index": 1,
+    "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document.",
+    "nodes": [
+      {
+        "title": "National Defence",
+        "node_id": "0001",
+        "start_index": 1,
+        "end_index": 1,
+        "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document."
+      },
+      {
+        "title": "Policies and standards",
+        "node_id": "0002",
+        "start_index": 1,
+        "end_index": 1,
+        "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document.",
+        "nodes": [
+          {
+            "title": "Defence Administrative Orders and Directives",
+            "node_id": "0003",
+            "start_index": 1,
+            "end_index": 1,
+            "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document.",
+            "nodes": [
+              {
+                "title": "DAOD 6000 - Table of Contents",
+                "node_id": "0004",
+                "start_index": 1,
+                "end_index": 1,
+                "summary": "The partial document covers policies and standards related to Information Management and Information Technology within the Canadian National Defence Department. It specifically details the contents of DAOD 6000-0, including sections such as Introduction, Definitions, Policy Direction, Consequences, Authorities, and References. The document also provides dates of issue and last modification for reference."
+              },
+              {
+                "title": "Introduction",
+                "node_id": "0005",
+                "start_index": 1,
+                "end_index": 1,
+                "summary": "The partial document covers policies and standards related to Information Management and Information Technology within the Canadian National Defence Department. It specifically details the contents of DAOD 6000-0, including sections such as Introduction, Definitions, Policy Direction, Consequences, Authorities, and References. The document also provides dates of issue and last modification for reference."
+              },
+              {
+                "title": "Definitions",
+                "node_id": "0006",
+                "start_index": 2,
+                "end_index": 3,
+                "summary": "The partial document describes a Defense Administrative Order Directive (DAOD) related to Information Management and Information Technology within the Department of National Defence (DND) and Canadian Armed Forces (CAF). It outlines the scope of application, superseding directives, approval authority, and contact information. The document also provides definitions for key terms such as communications security, defence terminology, information management, information security, and information technology security."
+              },
+              {
+                "title": "Policy Direction",
+                "node_id": "0007",
+                "start_index": 4,
+                "end_index": 4,
+                "summary": "The partial document covers the operational security standard for managing information technology security, including policy direction, context, and requirements for the Department of National Defence and the Canadian Armed Forces. It outlines the responsibilities of the Defence Chief Information Officer and the strategic context for managing information and technology, emphasizing collaboration and integrated business planning."
+              },
+              {
+                "title": "Consequences",
+                "node_id": "0008",
+                "start_index": 5,
+                "end_index": 5,
+                "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document."
+              },
+              {
+                "title": "Authorities",
+                "node_id": "0009",
+                "start_index": 5,
+                "end_index": 7,
+                "summary": "The partial document covers the establishment of strategic direction and governance structures for Information Management (IM) and Information Technology (IT) across the Department of National Defence (DND) and the Canadian Armed Forces (CAF). It includes ensuring the Defence Chief Information Officer (CIO) has visibility on all IM and IT activities, providing clear direction on the management of IM, IT, IT security, information security, COMSEC, and defence terminology, an...
+
+
+[step 3 raw model output]
+{"reason": "Retrieve the content of the 'Authorities' section to find information about ADM(IM)'s authority", "action": "get_page_content", "args": {"pages": "5-7"}}
+
+[tool call] get_page_content({'pages': '5-7'})
+[reason] Retrieve the content of the 'Authorities' section to find information about ADM(IM)'s authority
+[tool output preview]
+[
+  {
+    "page": 5,
+    "content": "b. establish DND- and CAF-wide str ategic dir ection and go vernance\nstructur es for IM and IT;\nc. ensur e that the Defence CIO has visibility on all IM and IT activities\nacross the DND and the CAF; and\nd. provide clear, concise and consistent dir ection and guidance on the\nmanagement of IM, IT, IT security, information security, C OMSEC and\ndefence terminology.\n4. Consequences\nGeneral\n4.1 Should clarification of the policy statement, r equir ements or authorities\nset out in this D AOD be r equir ed, DND emplo yees and CAF members may\nseek dir ection thr ough their channel of communication or chain of\ncommand, as appr opriate. The anticipated r esults set out in the policy\nstatement may not be achie ved b y the DND and the CAF if the\nrequir ements specified in this D AOD ar e not pr operly implemented. Not\nachie ving the anticipated r esults could affect the ability of the DND and the\nCAF to ensur e that the CAF is pr epar ed to undertak e missions for the\nprotection of Canada and Canadians and the maintenance of international\npeace and stability.\n5. Authorities\nAuthority Table\n5.1 The follo wing table identifies the authorities associated with this D AOD:\nThe ... has or have the authority to ...4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 5/8"
   },
   {
-    "node_id": "0012",
-    "title": "The DND and the CAF must:",
-    "start_index": 4,
-    "end_index": 4,
-    "reason": "This section further outlines the responsibilities of the DND and CAF in delivering integrated IM and IT, emphasizing the importance of collaboration."
+    "page": 6,
+    "content": "ADM(IM) establish str ategic dir ection and go vernance\nstructur es, and appr ove str ategies, plans,\nprojects and pr ogrammes, for IM, IT, IT security,\ninformation security, C OMSEC and defence\nterminology in the DND and the CAF;\nissue policies, dir ectives, instructions and\nstandar ds for IM, IT, IT security, information\nsecurity, C OMSEC and defence terminology  in\nthe DND and the CAF, and o versee their\ncompliance;\nestablish IM and IT services and capabilities that\nalign with business and oper ational objectives,\nand o versee their management, delivery and\nmaintenance;\nlead DND and CAF coor dination, and act as the\nfocal point, for IM, IT, IT security, information\nsecurity, C OMSEC and defence terminology with\nother go vernment departments and agencies,\nindustry and allies; and\nestablish:\na defence IM and IT pr ogramme for the\neffective and efficient management of IM\nand IT in the DND and the CAF;\nan IT security pr ogramme as part of a\ncoor dinated DND and CAF security\nprogramme;\na COMSEC pr ogramme to pr otect DND and\nCAF information fr om unauthorized access;\nand\na defence terminology pr ogramme for the\neffective and efficient management of\ndefence terminology.4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 6/8"
+  },
+  {
+    "page": 7,
+    "content": "level one advisors\nand commanders\nof commandsissue amplifying IM, IT, IT security, information\nsecurity and defence terminology dir ection and\nguidance to their or ganizations;\nset the IM and IT priorities of their\norganizations;\ndevelop and maintain integr ated IM and IT\nbusiness plans;\nrepresent the IM and IT inter ests of their\norganizations to the ADM(IM); and\nassist the ADM(IM) in r epresenting their IM and\nIT inter ests with other go vernment departments\nand agencies, industry and allies.\nTop of Page\n6. References\nActs, Regulations, Central Agency Policies and Policy\nDAOD\nPolicy on Information Management , Treasury Boar d\nDirective on Information Management Roles and Responsibilities , Treasury\nBoar d\nDirective on Management of Information Technology , Treasury Boar d\nOperational Security Standar d: Management of Information Technology\nSecurity (MITS) , Treasury Boar d\nDAOD 1000-6 , Policy Framework for Information and Information\nTechnology Management\nDAOD 1000-8 , Policy Framework for Safety and Security Management4/27/26, 9:42 PM DAOD 6000-0, Information Management and Information Technology - Canada.ca\nhttps://www.canada.ca/en/department-national-defence/corporate/policies-standards/defence-administrative-orders-directives/6000-series/6000/6000-… 7/8"
   }
 ]
 
+
+[step 4 raw model output]
+{
+  "final_answer": "The Authority Table for ADM(IM) includes the following responsibilities:\n- Establish strategic direction and governance structures for Information Management (IM) and Information Technology (IT).\n- Approve strategies, plans, projects, and programs for IM, IT, IT security, information security, COMSEC, and defense terminology in the Department of National Defence (DND) and the Canadian Armed Forces (CAF).\n- Issue policies, directives, instructions, and standards for IM, IT, IT security, information security, COMSEC, and defense terminology in the DND and CAF, and oversee their compliance.\n- Establish IM and IT services and capabilities that align with business and operational objectives, and oversee their management, delivery, and maintenance.\n- Lead DND and CAF coordination, and act as the focal point for IM, IT, IT security, information security, COMSEC, and defense terminology with other government departments and agencies, industry, and allies.\n- Establish a defense IM and IT program for the effective and efficient management of IM and IT in the DND and CAF.\n- Establish an IT security program as part of a coordinated DND and CAF security program.\n- Establish a COMSEC program to protect DND and CAF information from unauthorized access.\n- Establish a defense terminology program for the effective and efficient management of defense terminology."
+}
+
+
 Answer:
 
- Based on the retrieved pages, the DND and CAF are committed to a collaborative approach for the delivery of integrated military and information technology (IM and IT). The exact nature of their commitments is not clear from the provided context.
-
-Pages used: 0011,0012
-
---------------------------------------------------------------------------------
-
-Question: What authority does ADM(IM) have related to IM, IT, IT security, information security, COMSEC, and defence terminology?
-Using existing indexed document: 74021b01-a175-4446-8ed4-a7de53674302
-ERROR:root:Failed to extract JSON: Expecting ',' delimiter: line 1 column 221 (char 220)
-ERROR:root:Failed to parse JSON even after cleanup
-Traceback (most recent call last):
-  File "/home/kevinz/deepleaf/run.py", line 31, in <module>
-    main()
-  File "/home/kevinz/deepleaf/run.py", line 26, in main
-    ask_question(DEFAULT_PDF_PATH, question, DEFAULT_MODEL)
-  File "/home/kevinz/deepleaf/ask.py", line 321, in ask_question
-    selected_info = choose_pages_from_structure(
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/kevinz/deepleaf/ask.py", line 170, in choose_pages_from_structure
-    raise ValueError(
-ValueError: The LLM did not select any pages.
-Parsed output:
-{}
-Raw output:
- {
-  "pages": "5-6, 4, 11-12",
-  "reason": "The question asks about the authority of ADM(IM) related to IM, IT, IT security, information security, COMSEC, and defence terminology. The most relevant sections appear to be the "Authorities" section (node_id: 0005) which discusses the responsibilities of ADM(IM) in detail, and the "Policy Direction" section (node_id: 0012) which also mentions ADM(IM)'s role in managing information technology and information security for the Department of National Defense (DND) and Canadian Armed Forces (CAF). The "Definitions" section (node_id: 0007) may also be relevant for understanding the definitions of the mentioned terms."
-}
+The Authority Table for ADM(IM) includes the following responsibilities:
+- Establish strategic direction and governance structures for Information Management (IM) and Information Technology (IT).
+- Approve strategies, plans, projects, and programs for IM, IT, IT security, information security, COMSEC, and defense terminology in the Department of National Defence (DND) and the Canadian Armed Forces (CAF).
+- Issue policies, directives, instructions, and standards for IM, IT, IT security, information security, COMSEC, and defense terminology in the DND and CAF, and oversee their compliance.
+- Establish IM and IT services and capabilities that align with business and operational objectives, and oversee their management, delivery, and maintenance.
+- Lead DND and CAF coordination, and act as the focal point for IM, IT, IT security, information security, COMSEC, and defense terminology with other government departments and agencies, industry, and allies.
+- Establish a defense IM and IT program for the effective and efficient management of IM and IT in the DND and CAF.
+- Establish an IT security program as part of a coordinated DND and CAF security program.
+- Establish a COMSEC program to protect DND and CAF information from unauthorized access.
+- Establish a defense terminology program for the effective and efficient management of defense terminology.

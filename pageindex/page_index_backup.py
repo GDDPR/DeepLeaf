@@ -9,6 +9,72 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
+def _trim_for_small_model(text, max_chars=6000):
+    if not text:
+        return text
+    return text[:max_chars]
+
+
+def _extract_probable_toc_slice(text, max_lines=120):
+    if not text:
+        return ""
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    scored = []
+    for ln in lines:
+        score = 0
+        if re.match(r'^\d+(?:\.\d+)*\.?(?:\s|$)', ln):
+            score += 3
+        if re.search(r'\b\d{1,4}\s*$', ln):
+            score += 2
+        if ':' in ln or 'contents' in ln.lower() or 'introduction' in ln.lower():
+            score += 1
+        if len(ln) < 150:
+            score += 1
+        if score > 0:
+            scored.append(ln)
+    if not scored:
+        return '\n'.join(lines[:max_lines])
+    return '\n'.join(scored[:max_lines])
+
+
+def _normalize_heading_title(title):
+    title = re.sub(r'\s+', ' ', title or '').strip()
+    return title.rstrip('.').strip()
+
+
+def heuristic_extract_structure_from_pages(page_list, start_index=1, logger=None):
+    pattern = re.compile(r'^(?P<num>\d+(?:\.\d+)*)\.?(?:\s+)(?P<title>[^\n]{2,140})$')
+    seen = set()
+    items = []
+    for offset, page in enumerate(page_list):
+        page_no = start_index + offset
+        text = page[0] if isinstance(page, (list, tuple)) else str(page)
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        for ln in lines:
+            m = pattern.match(ln)
+            if not m:
+                continue
+            num = m.group('num')
+            title = _normalize_heading_title(m.group('title'))
+            if len(title) < 2 or len(title) > 140:
+                continue
+            if title.lower().startswith(('figure ', 'table ', 'abstract', 'keywords')):
+                continue
+            key = (num, title.lower())
+            if key in seen:
+                continue
+            seen.add(key)
+            items.append({
+                'structure': num,
+                'title': title,
+                'physical_index': page_no,
+            })
+    if logger:
+        logger.info({'heuristic_extract_count': len(items)})
+    return items
+
+
+
 ################### check title in page #########################################################
 async def check_title_appearance(item, page_list, start_index=1, model=None):    
     title=item['title']
@@ -102,24 +168,36 @@ async def check_title_appearance_in_start_concurrent(structure, page_list, model
 
 
 def toc_detector_single_page(content, model=None):
+    sample = _trim_for_small_model(_extract_probable_toc_slice(content), 4000)
     prompt = f"""
     Your job is to detect if there is a table of content provided in the given text.
 
-    Given text: {content}
+    Given text: {sample}
 
     return the following JSON format:
     {{
-        "thinking": <why do you think there is a table of content in the given text>
-        "toc_detected": "<yes or no>",
+        "thinking": <why do you think there is a table of content in the given text>,
+        "toc_detected": "<yes or no>"
     }}
 
     Directly return the final JSON structure. Do not output anything else.
-    Please note: abstract,summary, notation list, figure list, table list, etc. are not table of contents."""
+    Please note: abstract, summary, notation list, figure list, table list, etc. are not table of contents."""
 
     response = llm_completion(model=model, prompt=prompt)
-    # print('response', response)
-    json_content = extract_json(response)    
-    return json_content['toc_detected']
+    json_content = extract_json(response)
+    if 'toc_detected' in json_content:
+        return json_content.get('toc_detected', 'no')
+
+    lower = sample.lower()
+    if 'table of contents' in lower or 'contents' in lower:
+        return 'yes'
+    toc_like_lines = 0
+    for ln in sample.splitlines():
+        s = ln.strip()
+        if re.match(r'^\d+(?:\.\d+)*\.?\s+.+\b\d{1,4}$', s):
+            toc_like_lines += 1
+    return 'yes' if toc_like_lines >= 3 else 'no'
+
 
 
 def check_if_toc_extraction_is_complete(content, toc, model=None):
@@ -201,6 +279,7 @@ def extract_toc_content(content, model=None):
 
 def detect_page_index(toc_content, model=None):
     print('start detect_page_index')
+    toc_content = _trim_for_small_model(_extract_probable_toc_slice(toc_content), 4000)
     prompt = f"""
     You will be given a table of contents.
 
@@ -210,33 +289,40 @@ def detect_page_index(toc_content, model=None):
 
     Reply format:
     {{
-        "thinking": <why do you think there are page numbers/indices given within the table of contents>
+        "thinking": <why do you think there are page numbers/indices given within the table of contents>,
         "page_index_given_in_toc": "<yes or no>"
     }}
     Directly return the final JSON structure. Do not output anything else."""
 
     response = llm_completion(model=model, prompt=prompt)
     json_content = extract_json(response)
-    return json_content['page_index_given_in_toc']
+    if 'page_index_given_in_toc' in json_content:
+        return json_content.get('page_index_given_in_toc', 'no')
+
+    for ln in toc_content.splitlines():
+        s = ln.strip()
+        if re.match(r'^\d+(?:\.\d+)*\.?\s+.+\b\d{1,4}$', s):
+            return 'yes'
+    return 'no'
+
+
 
 def toc_extractor(page_list, toc_page_list, model):
     def transform_dots_to_colon(text):
         text = re.sub(r'\.{5,}', ': ', text)
-        # Handle dots separated by spaces
         text = re.sub(r'(?:\. ){5,}\.?', ': ', text)
         return text
-    
+
     toc_content = ""
     for page_index in toc_page_list:
         toc_content += page_list[page_index][0]
     toc_content = transform_dots_to_colon(toc_content)
     has_page_index = detect_page_index(toc_content, model=model)
-    
-    return {
-        "toc_content": toc_content,
-        "page_index_given_in_toc": has_page_index
-    }
 
+    return {
+        'toc_content': _trim_for_small_model(toc_content, 6000),
+        'page_index_given_in_toc': has_page_index,
+    }
 
 
 
@@ -378,18 +464,25 @@ def remove_page_number(data):
 
 def extract_matching_page_pairs(toc_page, toc_physical_index, start_page_index):
     pairs = []
+
     for phy_item in toc_physical_index:
         for page_item in toc_page:
             if phy_item.get('title') == page_item.get('title'):
                 physical_index = phy_item.get('physical_index')
-                if physical_index is not None and int(physical_index) >= start_page_index:
+
+                # convert_physical_index_to_int now turns bad values like "1.1.1"
+                # into None. Keep this extra guard so this function never crashes.
+                if not isinstance(physical_index, int):
+                    continue
+
+                if physical_index >= start_page_index:
                     pairs.append({
                         'title': phy_item.get('title'),
                         'page': page_item.get('page'),
                         'physical_index': physical_index
                     })
-    return pairs
 
+    return pairs
 
 def calculate_page_offset(pairs):
     differences = []
@@ -414,14 +507,15 @@ def calculate_page_offset(pairs):
     return most_common
 
 def add_page_offset_to_toc_json(data, offset):
+    if offset is None:
+        return data
+
     for i in range(len(data)):
         if data[i].get('page') is not None and isinstance(data[i]['page'], int):
             data[i]['physical_index'] = data[i]['page'] + offset
             del data[i]['page']
-    
+
     return data
-
-
 
 def page_list_to_group_text(page_contents, token_lengths, max_tokens=20000, overlap_page=1):    
     num_tokens = sum(token_lengths)
@@ -479,10 +573,6 @@ def add_page_number_to_toc(part, structure, model=None):
             ...
         ]    
     The given structure contains the result of the previous part, you need to fill the result of the current part, do not change the previous result.
-    IMPORTANT: Do not use ellipses.
-    IMPORTANT: Do not write "...".
-    IMPORTANT: Return every object completely.
-    IMPORTANT: The output must be valid JSON parseable by json.loads.
     Directly return the final JSON structure. Do not output anything else."""
 
     prompt = fill_prompt_seq + f"\n\nCurrent Partial Document:\n{part}\n\nGiven Structure\n{json.dumps(structure, indent=2)}\n"
@@ -510,6 +600,7 @@ def remove_first_physical_index_section(text):
 ### add verify completeness
 def generate_toc_continue(toc_content, part, model=None):
     print('start generate_toc_continue')
+    safe_part = _trim_for_small_model(part, 3500)
     prompt = """
     You are an expert in extracting hierarchical tree structure.
     You are given a tree structure of the previous part and the text of the current part.
@@ -519,32 +610,36 @@ def generate_toc_continue(toc_content, part, model=None):
 
     For the title, you need to extract the original title from the text, only fix the space inconsistency.
 
-    The provided text contains tags like <physical_index_X> and <physical_index_X> to indicate the start and end of page X. \
-    
+    The provided text contains tags like <physical_index_X> and <physical_index_X> to indicate the start and end of page X.
+
     For the physical_index, you need to extract the physical index of the start of the section from the text. Keep the <physical_index_X> format.
 
-    The response should be in the following format. 
+    The response should be in the following format.
         [
             {
                 "structure": <structure index, "x.x.x"> (string),
                 "title": <title of the section, keep the original title>,
-                "physical_index": "<physical_index_X> (keep the format)"
-            },
-            ...
-        ]    
+                "physical_index": "<physical_index_X>" (keep the format)
+            }
+        ]
 
     Directly return the additional part of the final JSON structure. Do not output anything else."""
 
-    prompt = prompt + '\nGiven text\n:' + part + '\nPrevious tree structure\n:' + json.dumps(toc_content, indent=2)
+    prompt = prompt + '\nGiven text\n:' + safe_part + '\nPrevious tree structure\n:' + json.dumps(toc_content, indent=2)
     response, finish_reason = llm_completion(model=model, prompt=prompt, return_finish_reason=True)
-    if finish_reason == 'finished':
-        return extract_json(response)
-    else:
-        raise Exception(f'finish reason: {finish_reason}')
-    
+    parsed = extract_json(response)
+    if isinstance(parsed, list):
+        return parsed
+    if finish_reason == 'max_output_reached':
+        return []
+    return []
+
+
+
 ### add verify completeness
 def generate_toc_init(part, model=None):
     print('start generate_toc_init')
+    safe_part = _trim_for_small_model(part, 4000)
     prompt = """
     You are an expert in extracting hierarchical tree structure, your task is to generate the tree structure of the document.
 
@@ -552,51 +647,79 @@ def generate_toc_init(part, model=None):
 
     For the title, you need to extract the original title from the text, only fix the space inconsistency.
 
-    The provided text contains tags like <physical_index_X> and <physical_index_X> to indicate the start and end of page X. 
+    The provided text contains tags like <physical_index_X> and <physical_index_X> to indicate the start and end of page X.
 
     For the physical_index, you need to extract the physical index of the start of the section from the text. Keep the <physical_index_X> format.
 
-    The response should be in the following format. 
+    The response should be in the following format.
         [
-            {{
+            {
                 "structure": <structure index, "x.x.x"> (string),
                 "title": <title of the section, keep the original title>,
-                "physical_index": "<physical_index_X> (keep the format)"
-            }},
-            
-        ],
-
+                "physical_index": "<physical_index_X>" (keep the format)
+            }
+        ]
 
     Directly return the final JSON structure. Do not output anything else."""
 
-    prompt = prompt + '\nGiven text\n:' + part
+    prompt = prompt + '\nGiven text\n:' + safe_part
     response, finish_reason = llm_completion(model=model, prompt=prompt, return_finish_reason=True)
+    parsed = extract_json(response)
+    if isinstance(parsed, list) and parsed:
+        return parsed
 
-    if finish_reason == 'finished':
-         return extract_json(response)
-    else:
-        raise Exception(f'finish reason: {finish_reason}')
+    temp_page_list = []
+    for m in re.finditer(r'<physical_index_(\d+)>\s*(.*?)\s*<physical_index_\1>', safe_part, flags=re.S):
+        temp_page_list.append((m.group(2), 0))
+    heur = heuristic_extract_structure_from_pages(temp_page_list, start_index=1)
+    if heur:
+        for item in heur:
+            item['physical_index'] = f"<physical_index_{item['physical_index']}>"
+        return heur
+
+    if finish_reason == 'max_output_reached':
+        return []
+    raise Exception(f'finish reason: {finish_reason}')
+
+
 
 def process_no_toc(page_list, start_index=1, model=None, logger=None):
-    page_contents=[]
-    token_lengths=[]
-    for page_index in range(start_index, start_index+len(page_list)):
+    heuristic = heuristic_extract_structure_from_pages(page_list, start_index=start_index, logger=logger)
+    if heuristic:
+        if logger:
+            logger.info({'mode': 'heuristic_process_no_toc', 'count': len(heuristic)})
+        return heuristic
+
+    page_contents = []
+    token_lengths = []
+    for page_index in range(start_index, start_index + len(page_list)):
         page_text = f"<physical_index_{page_index}>\n{page_list[page_index-start_index][0]}\n<physical_index_{page_index}>\n\n"
         page_contents.append(page_text)
         token_lengths.append(count_tokens(page_text, model))
-    group_texts = page_list_to_group_text(page_contents, token_lengths)
+
+    group_texts = page_list_to_group_text(page_contents, token_lengths, max_tokens=3000, overlap_page=0)
     logger.info(f'len(group_texts): {len(group_texts)}')
 
-    toc_with_page_number= generate_toc_init(group_texts[0], model)
+    toc_with_page_number = generate_toc_init(group_texts[0], model)
     for group_text in group_texts[1:]:
-        toc_with_page_number_additional = generate_toc_continue(toc_with_page_number, group_text, model)    
-        toc_with_page_number.extend(toc_with_page_number_additional)
+        toc_with_page_number_additional = generate_toc_continue(toc_with_page_number, group_text, model)
+        if toc_with_page_number_additional:
+            toc_with_page_number.extend(toc_with_page_number_additional)
     logger.info(f'generate_toc: {toc_with_page_number}')
 
     toc_with_page_number = convert_physical_index_to_int(toc_with_page_number)
     logger.info(f'convert_physical_index_to_int: {toc_with_page_number}')
 
-    return toc_with_page_number
+    if toc_with_page_number:
+        return toc_with_page_number
+
+    return [{
+        'structure': '1',
+        'title': 'Document',
+        'physical_index': start_index,
+    }]
+
+
 
 def process_toc_no_page_numbers(toc_content, toc_page_list, page_list,  start_index=1, model=None, logger=None):
     page_contents=[]
@@ -645,6 +768,11 @@ def process_toc_with_page_numbers(toc_content, toc_page_list, page_list, toc_che
 
     offset = calculate_page_offset(matching_pairs)
     logger.info(f'offset: {offset}')
+
+    if offset is None:
+        if logger:
+            logger.info('Could not calculate TOC page offset; falling back to process_no_toc.')
+        return process_no_toc(page_list, start_index=1, model=model, logger=logger)
 
     toc_with_page_number = add_page_offset_to_toc_json(toc_with_page_number, offset)
     logger.info(f'toc_with_page_number: {toc_with_page_number}')

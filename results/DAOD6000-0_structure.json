@@ -1,0 +1,102 @@
+{
+  "doc_name": "DAOD6000-0.pdf",
+  "structure": [
+    {
+      "title": "Canada.ca",
+      "node_id": "0000",
+      "start_index": 1,
+      "end_index": 0,
+      "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document.",
+      "nodes": [
+        {
+          "title": "National Defence",
+          "node_id": "0001",
+          "start_index": 1,
+          "end_index": 0,
+          "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document."
+        },
+        {
+          "title": "Policies and standards",
+          "node_id": "0002",
+          "start_index": 1,
+          "end_index": 0,
+          "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document.",
+          "nodes": [
+            {
+              "title": "Defence Administrative Orders and Directives",
+              "node_id": "0003",
+              "start_index": 1,
+              "end_index": 0,
+              "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document.",
+              "nodes": [
+                {
+                  "title": "DAOD 6000 - Table of Contents",
+                  "node_id": "0004",
+                  "start_index": 1,
+                  "end_index": 1,
+                  "summary": "The partial document covers policies and standards related to Information Management and Information Technology within the Canadian National Defence Department. It specifically details the contents of DAOD 6000-0, including sections such as Introduction, Definitions, Policy Direction, Consequences, Authorities, and References. The document also provides dates of issue and last modification for reference."
+                },
+                {
+                  "title": "Introduction",
+                  "node_id": "0005",
+                  "start_index": 1,
+                  "end_index": 1,
+                  "summary": "The partial document covers policies and standards related to Information Management and Information Technology within the Canadian National Defence Department. It specifically details the contents of DAOD 6000-0, including sections such as Introduction, Definitions, Policy Direction, Consequences, Authorities, and References. The document also provides dates of issue and last modification for reference."
+                },
+                {
+                  "title": "Definitions",
+                  "node_id": "0006",
+                  "start_index": 2,
+                  "end_index": 3,
+                  "summary": "The partial document describes a Defense Administrative Order Directive (DAOD) related to Information Management and Information Technology within the Department of National Defence (DND) and Canadian Armed Forces (CAF). It outlines the scope of application, superseding directives, approval authority, and contact information. The document also provides definitions for key terms such as communications security, defence terminology, information management, information security, and information technology security."
+                },
+                {
+                  "title": "Policy Direction",
+                  "node_id": "0007",
+                  "start_index": 4,
+                  "end_index": 4,
+                  "summary": "The partial document covers the operational security standard for managing information technology security, including policy direction, context, and requirements for the Department of National Defence and the Canadian Armed Forces. It outlines the responsibilities of the Defence Chief Information Officer and the strategic context for managing information and technology, emphasizing collaboration and integrated business planning."
+                },
+                {
+                  "title": "Consequences",
+                  "node_id": "0008",
+                  "start_index": 5,
+                  "end_index": 4,
+                  "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document."
+                },
+                {
+                  "title": "Authorities",
+                  "node_id": "0009",
+                  "start_index": 5,
+                  "end_index": 7,
+                  "summary": "The partial document covers the establishment of strategic direction and governance structures for Information Management (IM) and Information Technology (IT) across the Department of National Defence (DND) and the Canadian Armed Forces (CAF). It includes ensuring the Defence Chief Information Officer (CIO) has visibility on all IM and IT activities, providing clear direction on the management of IM, IT, IT security, information security, COMSEC, and defence terminology, and outlining the authorities responsible for these tasks. The document also specifies the consequences of not implementing the requirements properly and provides references for related policies and directives."
+                },
+                {
+                  "title": "Level one advisors and commanders of commands",
+                  "node_id": "0010",
+                  "start_index": 7,
+                  "end_index": 6,
+                  "summary": "The partial document appears to be an excerpt that does not provide specific content for analysis. More text is needed to identify the main points covered in the document."
+                },
+                {
+                  "title": "References",
+                  "node_id": "0011",
+                  "start_index": 7,
+                  "end_index": 7,
+                  "summary": "The partial document covers the roles and responsibilities of level one advisors and commanders within commands, focusing on their duties related to information management (IM) and information technology (IT), including issuing amplifying directions and guidance, setting priorities, developing business plans, representing organizational interests, and assisting in external communications. The document also lists references to relevant acts, regulations, and policies."
+                },
+                {
+                  "title": "Other References",
+                  "node_id": "0012",
+                  "start_index": 8,
+                  "end_index": 8,
+                  "summary": "The partial document covers various references related to Information Management (IM) and Information Technology (IT), including specific Defense Administrative Orders (DAODs) such as Information Technology, Information Technology Security, and Defence Terminology. It also includes policy frameworks, staffing processes, signature and approval procedures, and guidelines for policy instruments. Additionally, it mentions intranet sites for policy development and management, and provides a link to a specific document on Canada.ca."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

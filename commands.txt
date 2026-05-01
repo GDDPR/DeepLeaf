@@ -1,4 +1,18 @@
 To run run_pageindex.py:
     python3 run_pageindex.py --pdf_path ./vr_paper.pdf
 
-To 
+
+python run_pageindex.py \
+    --pdf_path docs/DAOD6000-0.pdf \
+    --model openai/Qwen/Qwen2.5-7B-Instruct-AWQ \
+    --toc-check-pages 0 \
+    --if-add-node-id yes \
+    --if-add-node-summary yes
+
+
+python pageindex_rag.py \
+    --pdf-path docs/DAOD6000-0.pdf \
+    --structure-json results/DAOD6000-0_structure.json \
+    --question "What authority does ADM(IM) have?" \
+    --model Qwen/Qwen2.5-7B-Instruct-AWQ \
+    --verbose
